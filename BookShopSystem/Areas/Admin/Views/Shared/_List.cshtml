@@ -1,0 +1,17 @@
+﻿
+@{
+    ViewBag.Title = "_List";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+@section head{
+    <link href="~/Content/plugins/datatable/amazeui.datatables.css" rel="stylesheet" />
+    @RenderSection("head", false)
+}
+@RenderBody()
+@section scripts{
+    <script src="~/Content/plugins/datatable/amazeui.datatables.min.js"></script>
+    <script src="~/Content/plugins/datatable/dataTables.responsive.min.js"></script>
+    @RenderSection("scripts", false)
+}
+

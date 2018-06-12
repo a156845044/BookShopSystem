@@ -1,0 +1,43 @@
+﻿
+@{
+    ViewBag.Title = "个人资料";
+    Layout = "~/Views/Shared/_Person.cshtml";
+}
+@section head{
+    <link href="~/Content/theme/shop/css/infstyle.css" rel="stylesheet" type="text/css">
+}
+
+<div class="col-main">
+    <div class="main-wrap">
+        <div class="user-info">
+            <!--标题 -->
+            <div class="am-cf am-padding">
+                <div class="am-fl am-cf"><strong class="am-text-danger am-text-lg">个人资料</strong> / <small>Personal&nbsp;information</small></div>
+            </div>
+            <hr />
+            <!--个人信息 -->
+            <div class="info-main" style="height:800px;">
+                <form class="am-form am-form-horizontal">
+                    <div class="am-form-group">
+                        <label for="user-birth" class="am-form-label">职业</label>
+                        <div class="am-form-content birth">
+                            <div class="birth-select">
+                                <select id="profession-select" data-am-selected="{searchBox: 1}" style="display: none;" v-model="loginInfo.ProfessionId" placeholder="请选择职业">
+                                    <option v-for="item in professionList" v-bind:value="item.Id">{{item.Name}}</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="info-btn">
+                        <div class="am-btn am-btn-danger" v-on:click="save">保存修改</div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts{
+    <script src="~/Scripts/Person/infomation.js"></script>
+}
+

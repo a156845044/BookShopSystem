@@ -1,0 +1,20 @@
+﻿
+@{
+    ViewBag.Title = "_Form";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+@section head{
+
+    @RenderSection("head", false)
+}
+@RenderBody()
+@section scripts{
+    <script src="~/Content/plugins/vue/vee-validate.js"></script>
+    <script>
+        Vue.use(VeeValidate);
+    </script>
+    @RenderSection("scripts", false)
+}
+
+

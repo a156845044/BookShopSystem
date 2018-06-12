@@ -1,0 +1,291 @@
+﻿
+@{
+    ViewBag.Title = "商品详情";
+    Layout = "~/Views/Shared/_Category.cshtml";
+}
+@section head{
+    <link type="text/css" href="~/Content/theme/shop/css/optstyle.css" rel="stylesheet" />
+    <link type="text/css" href="~/Content/theme/shop/css/style.css" rel="stylesheet" />
+    <link href="~/Content/plugins/ampager/amazeui.page.css" rel="stylesheet" />
+
+}
+<div class="clear"></div>
+<b class="line"></b>
+<div class="listMain" id="app-introduction">
+    <!--分类-->
+    <div class="nav-table">
+        <div class="long-title"><span class="all-goods">全部分类</span></div>
+    </div>
+
+    <!--导航-->
+    <ol class="am-breadcrumb am-breadcrumb-slash">
+        <li><a href="/Home/Index">首页</a></li>
+        <li><a href="#">分类</a></li>
+        <li class="am-active">内容</li>
+    </ol>
+
+    <div class="scoll">
+        <section class="slider">
+            <div class="flexslider">
+                <ul class="slides">
+                    <li v-for="item in imgList">
+                        <img v-bind:src="item.FilePath" style="height:auto;width:400px;" title="pic" />
+                    </li>
+                </ul>
+            </div>
+        </section>
+    </div>
+
+    <!--放大镜-->
+    <div class="item-inform">
+    </div>
+
+    <div class="am-g am-g-fixed">
+        <div class="am-u-sm-4">
+            <div class="clearfixLeft" id="clearcontent">
+                <div class="box">
+                    <div class="tb-booth tb-pic tb-s310">
+                        <a v-bind:href="cover"><img style="height:auto;width:260px;" v-bind:src="cover" alt="细节展示放大镜特效" v-bind:rel="cover" class="jqzoom" /></a>
+                    </div>
+                    <ul class="tb-thumb" id="thumblist">
+                        <li class="tb-selected" v-for="item in imgList">
+                            <div class="tb-pic tb-s40">
+                                <a href="#"><img style="height:60px;width:auto;" v-bind:src="item.FilePath" v-bind:mid="item.FilePath" v-bind:big="item.FilePath"></a>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="clear"></div>
+            </div>
+
+        </div>
+        <div class="am-u-sm-8">
+            <div class="clearfixRight">
+                <!--规格属性-->
+                <!--名称-->
+                <div class="tb-detail-hd">
+                    <h1>
+                        {{product.Title}} 【{{product.Author}}】
+                    </h1>
+                </div>
+                <div class="tb-detail-list">
+                    <!--价格-->
+                    <div class="tb-detail-price">
+                        <li class="price iteminfo_price">
+                            <dt>促销价</dt>
+                            <dd><em>¥</em><b class="sys_item_price">{{product.UnitPrice}}</b>  </dd>
+                        </li>
+                        <li class="price iteminfo_mktprice">
+                            <dt>原价</dt>
+                            <dd><em>¥</em><b class="sys_item_mktprice">{{product.UnitPrice+30}}</b></dd>
+                        </li>
+                        <div class="clear"></div>
+                    </div>
+                    <div class="clear"></div>
+                    <!--销量-->
+                    <ul class="tm-ind-panel">
+                        <li class="tm-ind-item tm-ind-sellCount canClick">
+                            <div class="tm-indcon"><span class="tm-label">月销量</span><span class="tm-count">{{statistics.monthSales}}</span></div>
+                        </li>
+                        <li class="tm-ind-item tm-ind-sumCount canClick">
+                            <div class="tm-indcon"><span class="tm-label">累计销量</span><span class="tm-count">{{statistics.sales}}</span></div>
+                        </li>
+                        <li class="tm-ind-item tm-ind-reviewCount canClick tm-line3">
+                            <div class="tm-indcon"><span class="tm-label">累计评价</span><span class="tm-count">{{statistics.commentCount}}</span></div>
+                        </li>
+                    </ul>
+                    <div class="clear"></div>
+                    <!--各种规格-->
+                    <dl class="iteminfo_parameter sys_item_specpara">
+                        <dt class="theme-login"><div class="cart-title">可选规格<span class="am-icon-angle-right"></span></div></dt>
+                        <dd>
+                            <!--操作页面-->
+                            <div class="theme-popover-mask"></div>
+                            <div class="theme-popover">
+                                <div class="theme-span"></div>
+                                <div class="theme-poptit">
+                                    <a href="javascript:;" title="关闭" class="close">×</a>
+                                </div>
+                                <div class="theme-popbod dform">
+                                    <div class="theme-signin-left">
+                                        <div class="theme-options">
+                                            <div class="cart-title number">数量</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </dd>
+                        <dd>
+                            <input id="text_box"  type="number" v-model="buyNum" style="width:50px;" />
+                            <span id="Stock" class="tb-hidden">库存<span class="stock">{{product.Quantity}}</span>件</span>
+                        </dd>
+
+                        <div class="pay">
+                            <ul>
+                                <li>
+                                    <div class="clearfix tb-btn tb-btn-buy theme-login">
+                                        <a id="LikBuy" title="点此按钮到下一步确认购买信息" v-on:click="buy" href="#">立即购买</a>
+                                    </div>
+                                </li>
+                                @*<li>
+                                    <div class="clearfix tb-btn tb-btn-basket theme-login">
+                                        <a id="LikBasket" title="加入购物车" v-on:click="addshoping" href="#"><i></i>加入购物车</a>
+                                    </div>
+                                </li>*@
+                            </ul>
+                        </div>
+
+                    </dl>
+                </div>
+                <div class="clear"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="clear" style="height:10px;"></div>
+    <!--商品详情-->
+    <div class="am-g am-g-fixed">
+        <div class="am-u-sm-2">
+            <div class="browse" style="width:95%">
+                <div class="mc">
+                    <ul>
+                        <div class="mt" style="text-align:center;">
+                            <h2>看了又看</h2>
+                        </div>
+
+                        <li class="first" v-for="item in recommendList">
+                            <div class="p-img">
+                                <a href="#"> <img class="" v-bind:src="item.CoverURL"> </a>
+                            </div>
+                            <div class="p-name">
+                                <a v-bind:href="'/Product/Introduction?id='+item.Id">
+                                    【{{item.Author}}】{{item.Title}}
+                                </a>
+                            </div>
+                            <div class="p-price"><strong>￥{{item.UnitPrice}}</strong></div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="am-u-sm-10">
+            <div class="am-tabs" data-am-tabs>
+                <ul class="am-avg-sm-3 am-tabs-nav am-nav am-nav-tabs">
+                    <li class="am-active">
+                        <a href="#">
+                            <span class="index-needs-dt-txt">商品详情</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <span class="index-needs-dt-txt">全部评价</span>
+                        </a>
+                    </li>
+                </ul>
+                <div class="am-tabs-bd">
+                    <div class="am-tab-panel am-fade am-in am-active">
+                        <div class="J_Brand">
+                            <ul id="J_AttrUL">
+                                <li title="">作者:&nbsp;{{product.Author}}</li>
+                                <li title="">出版社:&nbsp;{{product.PublisherName}}</li>
+                                <li title="">出版时间:&nbsp;{{product.PublishDate}}</li>
+                                <li title="">字数:&nbsp;{{product.WordsCount}}</li>
+                                <li title="">ISBN:&nbsp;{{product.ISBN}}</li>
+                            </ul>
+                            <div class="clear"></div>
+                        </div>
+
+                        <div class="details">
+                            <div class="attr-list-hd after-market-hd">
+                                <h4>作者简介</h4>
+                            </div>
+                            <div class="twlistNews" v-html="product.AurhorDescription">
+                            </div>
+                            <div class="attr-list-hd after-market-hd" v-if="product.EditorComment!=''&& product.EditorComment!=undefined">
+                                <h4>编辑推荐</h4>
+                            </div>
+                            <div class="twlistNews" v-if="product.EditorComment!=''&& product.EditorComment!=undefined" v-html="product.EditorComment">
+                            </div>
+                            <div class="attr-list-hd after-market-hd">
+                                <h4>目录浏览</h4>
+                            </div>
+                            <div class="twlistNews" v-html="product.TOC">
+                            </div>
+                            <div class="attr-list-hd after-market-hd">
+                                <h4>图书简介</h4>
+                            </div>
+                            <div class="twlistNews" v-html="product.ContentDescription">
+                            </div>
+                        </div>
+                        <div class="clear"></div>
+                    </div>
+
+                    <div class="am-tab-panel am-fade">
+                        <ul class="am-comments-list am-comments-list-flip">
+                            <li class="am-comment" v-for="item in commentList">
+                                <!-- 评论容器 -->
+                                <a href="">
+                                    <img class="am-comment-avatar" src="~/Content/theme/shop/images/hwbn40x40.jpg" />
+                                    <!-- 评论者头像 -->
+                                </a>
+                                <div class="am-comment-main">
+                                    <!-- 评论内容容器 -->
+                                    <header class="am-comment-hd">
+                                        <!--<h3 class="am-comment-title">评论标题</h3>-->
+                                        <div class="am-comment-meta">
+                                            <!-- 评论元数据 -->
+                                            <a href="#link-to-user" class="am-comment-author">{{item.Account}}</a>
+                                            <!-- 评论者 -->
+                                            评论于
+                                            <time datetime="">{{item.CreateTime|formatDate}}</time>
+                                        </div>
+                                    </header>
+                                    <div class="am-comment-bd">
+                                        <div class="tb-rev-item " data-id="255776406962">
+                                            <div class="J_TbcRate_ReviewContent tb-tbcr-content ">
+                                                {{item.Contents}}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- 评论内容 -->
+                                </div>
+                            </li>
+                        </ul>
+                        <div class="clear"></div>
+                        <div id="pager"></div>
+                        <div class="clear"></div>
+                        <div class="tb-reviewsft">
+                            <div class="tb-rate-alert type-attention">购买前请查看该商品的 <a href="#" target="_blank">购物保障</a>，明确您的售后保障权益。</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="clear"></div>
+        </div>
+    </div>
+
+    <!-- introduce-->
+    <div class="introduce">
+    </div>
+</div>
+
+@section scripts{
+    <script type="text/javascript" src="~/Content/theme/shop/js/jquery.imagezoom.min.js"></script>
+    <script type="text/javascript" src="~/Content/theme/shop/js/jquery.flexslider.js"></script>
+    <script type="text/javascript" src="~/Content/theme/shop/js/list.js"></script>
+    <script src="~/Content/plugins/moment/moment.js"></script>
+    <script src="~/Content/plugins/moment/zh.js"></script>
+    <script src="~/Content/plugins/ampager/amazeui.page.js"></script>
+    <script type="text/javascript">
+        $(function () { });
+        $(window).load(function () {
+            $('.flexslider').flexslider({
+                animation: "slide",
+                start: function (slider) {
+                    $('body').removeClass('loading');
+                }
+            });
+        });
+    </script>
+    <script src="~/Scripts/Product/introduction.js"></script>
+}

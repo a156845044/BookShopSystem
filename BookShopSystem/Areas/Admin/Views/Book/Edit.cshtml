@@ -1,0 +1,182 @@
+﻿
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Areas/Admin/Views/Shared/_Form.cshtml";
+}
+@section head{
+
+    <style>
+        .am-form-group, .am-checkbox, .am-radio label {
+            color: #ffffff;
+        }
+
+        select {
+            height: 5px !important;
+        }
+
+        .form-custom input {
+            color: #4d6b8a !important;
+        }
+    </style>
+}
+<div class="container-fluid am-cf">
+    <div class="row">
+        <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
+            <div class="page-header-heading">
+                <span class="am-icon-book page-header-heading-icon"></span> 图书管理 <small>Edit</small> <span class="am-fr"><a href="/Admin/Book/Index"><small>返回</small></a></span>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="row-content am-cf">
+    <div class="row">
+
+        <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
+            <div class="widget am-cf">
+                <div class="widget-head am-cf">
+                    <div class="widget-title am-fl">图书编辑</div>
+                </div>
+                <div class="widget-body am-fr" id="edit-form">
+
+                    <form class="am-form tpl-form-line-form">
+                        <div class="am-form-group">
+                            <label  class="am-u-sm-3 am-form-label">标题 <span class="tpl-form-line-small-title">Title</span></label>
+                            <div class="am-u-sm-9">
+                                <input type="text" v-model="bookModel.Title" v-validate="'required'" name="图书名称" class="tpl-form-input" placeholder="请输入图书名称">
+                            </div>
+                        </div>
+                        <div class="am-form-group">
+                            <label  class="am-u-sm-3 am-form-label">作者 <span class="tpl-form-line-small-title">Author</span></label>
+                            <div class="am-u-sm-9">
+                                <input type="text" v-model="bookModel.Author" v-validate="'required'" name="作者" class="tpl-form-input" placeholder="请输入图书的作者姓名">
+                            </div>
+                        </div>
+                        <div class="am-form-group">
+                            <label  class="am-u-sm-3 am-form-label">ISBN <span class="tpl-form-line-small-title">Author</span></label>
+                            <div class="am-u-sm-9">
+                                <input type="number" v-model="bookModel.ISBN" v-validate="'required'" name="ISBN" class="tpl-form-input" placeholder="请输入图书的ISBN">
+                            </div>
+                        </div>
+
+                        <div class="am-form-group">
+                            <label  class="am-u-sm-3 am-form-label">出版时间 <span class="tpl-form-line-small-title">Time</span></label>
+                            <div class="am-u-sm-9">
+                                <input type="text"  id="txtPublishDate"  v-validate="'required'" name="出版时间"  class="am-form-field tpl-form-no-bg" placeholder="出版时间"   >
+                            </div>
+                        </div>
+                        <div class="am-form-group">
+                            <label  class="am-u-sm-3 am-form-label">字数 <span class="tpl-form-line-small-title">Word</span></label>
+                            <div class="am-u-sm-9">
+                                <input type="number" v-model="bookModel.WordsCount" v-validate="'required'" name="字数"  class="tpl-form-input" placeholder="请输入图书的字数">
+                            </div>
+                        </div>
+                        <div class="am-form-group">
+                            <label  class="am-u-sm-3 am-form-label">单价 <span class="tpl-form-line-small-title">Price</span></label>
+                            <div class="am-u-sm-9">
+                                <input type="number" v-model="bookModel.UnitPrice" v-validate="'required'" name="单价" class="tpl-form-input" placeholder="请输入图书的单价">
+                            </div>
+                        </div>
+                        <div class="am-form-group">
+                            <label class="am-u-sm-3 am-form-label">库存量 <span class="tpl-form-line-small-title">Quantity</span></label>
+                            <div class="am-u-sm-9">
+                                <input type="number" v-model="bookModel.Quantity" v-validate="'required'" name="库存量" class="tpl-form-input" placeholder="请输入图书的库存量">
+                            </div>
+                        </div>
+                        <div class="am-form-group am-form-inline form-custom">
+                            <label  class="am-u-sm-3 am-form-label">分类<span class="tpl-form-line-small-title">Category</span></label>
+                            <div class="am-u-sm-9">
+                                <select id="parent-select" data-am-selected="{searchBox: 1}" placeholder="请选择一级分类" v-model="parentId">
+                                    <option v-for="item in parentCategoryList" v-bind:value="item.Id">{{item.CategoryName}}</option>
+                                </select>
+                               
+                                <select id="child-select" data-am-selected="{searchBox: 1}" placeholder="请选择二级分类" style="display: none;" v-model="bookModel.CategoryId" v-validate="'required'" name="分类">
+                                    <option v-for="item in childCategoryList" v-bind:value="item.Id">{{item.CategoryName}}</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="am-form-group form-custom ">
+                            <label  class="am-u-sm-3 am-form-label">出版社 <span class="tpl-form-line-small-title">Publisher</span></label>
+                            <div class="am-u-sm-9">
+                                <select id="publisher-select" data-am-selected="{searchBox: 1}" style="display: none;" v-model="bookModel.PublisherId" v-validate="'required'" name="出版社" placeholder="请选择出版社">
+                                    <option v-for="item in publishersList" v-bind:value="item.Id">{{item.Name}}</option>
+                                </select>
+
+                            </div>
+                        </div>
+                        <div class="am-form-group form-custom ">
+                            <label for="user-phone" class="am-u-sm-3 am-form-label">适读职业 <span class="tpl-form-line-small-title">Profession</span></label>
+                            <div class="am-u-sm-9">
+                                <select id="profession-select" data-am-selected="{searchBox: 1}" style="display: none;" v-model="bookModel.ProfessionId" placeholder="请选择适读职业">
+                                    <option v-for="item in professionList" v-bind:value="item.Id">{{item.Name}}</option>
+                                </select>
+
+                            </div>
+                        </div>
+                        <div class="am-form-group">
+                            <label for="user-weibo" class="am-u-sm-3 am-form-label">图片 <span class="tpl-form-line-small-title">Images</span></label>
+                            <div class="am-u-sm-9">
+                                <div class="am-form-group am-form-file">
+                                    <div id="upload"></div>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="am-form-group">
+                            <label for="user-intro" class="am-u-sm-3 am-form-label">图书目录</label>
+                            <div class="am-u-sm-9">
+                                <!-- 加载编辑器的容器 -->
+                                <script id="toc-container" name="content" type="text/plain">
+                                    {{bookModel.TOC}}
+                                </script>
+
+                            </div>
+                        </div>
+                        <div class="am-form-group">
+                            <label for="user-intro" class="am-u-sm-3 am-form-label">内容简介</label>
+                            <div class="am-u-sm-9">
+                                <!-- 加载编辑器的容器 -->
+                                <script id="content-container" name="content" type="text/plain">
+                                    {{bookModel.ContentDescription}}
+                                </script>
+                            </div>
+                        </div>
+                        <div class="am-form-group">
+                            <label for="user-intro" class="am-u-sm-3 am-form-label">作者简介</label>
+                            <div class="am-u-sm-9">
+                                <!-- 加载编辑器的容器 -->
+                                <script id="author-container" name="content" type="text/plain">
+                                    {{bookModel.AurhorDescription}}
+                                </script>
+                            </div>
+                        </div>
+                        <div class="am-form-group">
+                            <label for="user-intro" class="am-u-sm-3 am-form-label">编者推荐</label>
+                            <div class="am-u-sm-9">
+                                <!-- 加载编辑器的容器 -->
+                                <script id="editor-container" name="content" type="text/plain">
+                                    {{bookModel.EditorComment}}
+                                </script>
+                            </div>
+                        </div>
+                        <div class="am-form-group">
+                            <div class="am-u-sm-9 am-u-sm-push-3">
+                                <button type="button"  v-on:click="save" class="am-btn am-btn-primary tpl-btn-bg-color-success ">提交</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts{
+    <script src="~/Content/plugins/webuploader/brilliant.webuploader.js"></script>
+    <script src="~/Content/plugins/UEditor/ueditor.config.js" charset="utf-8"></script>
+    <script src="~/Content/plugins/UEditor/ueditor.all.js"></script>
+    <script src="~/Content/plugins/moment/moment.js"></script>
+    <script src="~/Content/plugins/moment/zh.js"></script>
+    <script src="~/Areas/Admin/Scripts/Book/edit.js"></script>
+}

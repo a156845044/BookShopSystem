@@ -1,0 +1,348 @@
+﻿@{
+    ViewBag.Title = "首页";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div id="app-container">
+    <div class="banner">
+        <!--轮播 -->
+        <div class="am-slider am-slider-default scoll" data-am-flexslider id="demo-slider-0">
+            <ul class="am-slides">
+                <li class="banner2"><a><img src="~/Content/theme/shop/images/ad/1.jpg" /></a></li>
+                <li class="banner3"><a><img src="~/Content/theme/shop/images/ad/2.jpg" /></a></li>
+                <li class="banner4"><a><img src="~/Content/theme/shop/images/ad/3.jpg" /></a></li>
+            </ul>
+        </div>
+        <div class="clear"></div>
+    </div>
+    <div class="shopNav">
+        <div class="slideall">
+            <div class="long-title"><span class="all-goods">全部分类</span></div>
+            <!--侧边导航 -->
+            <div id="nav" class="navfull">
+                <div class="area clearfix">
+                    <div class="category-content" id="guide_2">
+
+                        <div class="category">
+                            <ul class="category-list" id="js_climit_li">
+                                <li class="appliance js_toggle relative" v-for="(category,index) in categoryList" v-bind:class="{first:(index==0),last:(index=categoryList.length-1)}">
+                                    <div class="category-info">
+                                        <h3 class="category-name b-category-name"><i><img src="~/Content/theme/shop/images/cake.png"></i><a class="ml-22" v-bind:title="category.Name">{{category.Name}}</a></h3>
+                                        <em>&gt;</em>
+                                    </div>
+                                    <div class="menu-item menu-in top">
+                                        <div class="area-in">
+                                            <div class="area-bg">
+                                                <div class="menu-srot">
+                                                    <div class="sort-side">
+                                                        <dl class="dl-sort">
+                                                            <dt><span v-bind:title="category.Name">{{category.Name}}</span></dt>
+                                                            <dd v-for="child in category.ChildList"><a v-bind:title="child.Name" href="#" v-on:click="search(child.Id)"><span>{{child.Name}}</span></a></dd>
+                                                        </dl>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <b class="arrow"></b>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <!--走马灯 -->
+            <div class="marqueen" v-if="!islogin">
+                <span class="marqueen-title">商城头条</span>
+                <div class="demo">
+                    <ul>
+                        <li class="title-first">
+                            <a target="_blank" href="#">
+                                <img src="~/Content/theme/shop/images/TJ2.jpg">
+                                <span>[特惠]</span>商城爆品1分秒
+                            </a>
+                        </li>
+                        <div class="mod-vip">
+                            <div class="m-baseinfo">
+                                <a href="~/Content/theme/shop/person/index.html">
+                                    <img src="~/Content/theme/shop/images/getAvatar.do.jpg">
+                                </a>
+                                <em>
+                                    Hi,<span class="s-name">小叮当</span>
+                                </em>
+                            </div>
+                            <div class="member-logout">
+                                <a class="am-btn-warning btn" v-on:click="login">登录</a>
+                                <a class="am-btn-warning btn" v-on:click="register" href="javascipt:void(0)">注册</a>
+                            </div>
+                            <div class="member-login">
+                                <a href="#"><strong>0</strong>待收货</a>
+                                <a href="#"><strong>0</strong>待发货</a>
+                                <a href="#"><strong>0</strong>待付款</a>
+                                <a href="#"><strong>0</strong>待评价</a>
+                            </div>
+                            <div class="clear"></div>
+                        </div>
+
+                        <li><a target="_blank" href="#"><span>[特惠]</span>世纪三部曲，低至五折</a></li>
+                        <li><a target="_blank" href="#"><span>[公告]</span>华北、华中部分地区配送延迟</a></li>
+                        <li><a target="_blank" href="#"><span>[特惠]</span>书香节，全场满100减50，可叠加！</a></li>
+
+                    </ul>
+                    <div class="advTip"><img src="~/Content/theme/shop/images/ad/2018041916114023578.jpg" /></div>
+                </div>
+            </div>
+            <div class="clear"></div>
+        </div>
+
+    </div>
+    <div class="shopMainbg">
+        <div class="shopMain" id="shopmain">
+            <!--好书推荐 -->
+            <div class="am-g am-g-fixed recommendation">
+                <div class="clock am-u-sm-3">
+                    <img src="~/Content/theme/shop/images/2018.png" style="height:110px;width:auto;" />
+                    <p>好书<br>推荐</p>
+                </div>
+                <div class="am-u-sm-4 am-u-lg-3 " v-for="recommend in recommendList">
+                    <div class="info ">
+                        <h3 class="text-overflow" style="width:150px" v-bind:title="recommend.Title">{{recommend.Title}}</h3>
+                        <h4>{{recommend.Author}}</h4>
+                    </div>
+                    <div class="recommendationMain one">
+                        <a v-bind:href="'/Product/Introduction?id='+recommend.Id"><img v-bind:src="recommend.CoverURL" /></a>
+                    </div>
+                </div>
+            </div>
+            <div class="clear"></div>
+            <!--热门活动 -->
+            <div class="am-container activity">
+                <div class="clear "></div>
+                <div id="f1">
+                    <!--文学-->
+                    <div class="am-container ">
+                        <div class="shopTitle ">
+                            <h4>文学</h4>
+                            <h3>一花一世界 一叶一菩提</h3>
+                        </div>
+                    </div>
+                    <div class="am-g am-g-fixed floodFour">
+
+                        <div class="am-u-sm-5 am-u-md-4 text-one list ">
+                            <a href="# ">
+                                <div class="outer-con ">
+                                </div>
+                            </a>
+                            <div class="triangle-topright"></div>
+                        </div>
+                        <div v-for="(item,index) in literatureList" v-bind:class="index | formatStyleOne">
+                            <div class="outer-con ">
+                                <div class="title ">
+                                    {{item.Title}}
+                                </div>
+                                <div class="sub-title ">
+                                    ¥{{item.UnitPrice}}
+                                </div>
+                                <i class="am-icon-shopping-basket am-icon-md  seprate"></i>
+                            </div>
+                            <a v-bind:href="'/Product/Introduction?id='+item.Id"><img v-bind:src="item.CoverURL" style="height:180px;width:auto;" /></a>
+                        </div>
+                    </div>
+                    <div class="clear "></div>
+                </div>
+
+
+                <div id="f2">
+                    <!--编程世界-->
+                    <div class="am-container ">
+                        <div class="shopTitle ">
+                            <h4>码农世界</h4>
+                            <h3>看区块连的应用与未来</h3>
+                        </div>
+                    </div>
+                    <div class="am-g am-g-fixed floodThree ">
+                        <div class="am-u-sm-4 text-four list">
+                            <div class="word">
+                            </div>
+                            <a href="#">
+                            </a>
+                            <div class="triangle-topright"></div>
+                        </div>
+                        <div v-for="(item,index) in computerList" v-bind:class="index | formatStyleTwo">
+                            <a v-bind:href="'/Product/Introduction?id='+item.Id">
+                                <img v-bind:src="item.CoverURL" style="height:168px;width:auto;" />
+                                <div class="outer-con ">
+                                    <div class="title ">
+                                        {{item.Title}}
+                                    </div>
+                                    <div class="sub-title ">
+                                        ¥{{item.UnitPrice}}
+                                    </div>
+                                    <i class="am-icon-shopping-basket am-icon-md  seprate"></i>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="clear "></div>
+                </div>
+
+                <div id="f3">
+                    <!--经管-->
+                    <div class="am-container ">
+                        <div class="shopTitle ">
+                            <h4>经管</h4>
+                            <h3>乱世，总有一天还会再回来</h3>
+                        </div>
+                    </div>
+                    <div class="am-g am-g-fixed floodFour">
+                        <div class="am-u-sm-5 am-u-md-4 text-one list ">
+                            <div class="word">
+                            </div>
+                            <a href="# ">
+                                <div class="outer-con ">
+
+                                </div>
+
+                            </a>
+                            <div class="triangle-topright"></div>
+                        </div>
+                        <div v-for="(item,index) in economicsList" v-bind:class="index | formatStyleOne">
+                            <div class="outer-con ">
+                                <div class="title ">
+                                    {{item.Title}}
+                                </div>
+                                <div class="sub-title ">
+                                    ¥{{item.UnitPrice}}
+                                </div>
+                                <i class="am-icon-shopping-basket am-icon-md  seprate"></i>
+                            </div>
+                            <a v-bind:href="'/Product/Introduction?id='+item.Id"><img v-bind:src="item.CoverURL" style="height:180px;width:auto;" /></a>
+                        </div>
+                    </div>
+                    <div class="clear "></div>
+                </div>
+
+                <div id="f4">
+                    <!--游戏-->
+                    <div class="am-container ">
+                        <div class="shopTitle ">
+                            <h4>游戏</h4>
+                            <h3>看别人如何吃鸡</h3>
+                        </div>
+                    </div>
+                    <div class="am-g am-g-fixed floodThree ">
+                        <div class="am-u-sm-4 text-four list">
+                            <div class="word">
+
+                            </div>
+                            <a href="# ">
+
+                                <div class="outer-con ">
+                                    <div class="title ">
+
+                                    </div>
+                                </div>
+                            </a>
+                            <div class="triangle-topright"></div>
+                        </div>
+                        <div v-for="(item,index) in gameList" v-bind:class="index | formatStyleTwo">
+                            <a v-bind:href="'/Product/Introduction?id='+item.Id">
+                                <img v-bind:src="item.CoverURL" style="height:180px;width:auto;" />
+                                <div class="outer-con ">
+                                    <div class="title ">
+                                        {{item.Title}}
+                                    </div>
+                                    <div class="sub-title ">
+                                        ¥{{item.UnitPrice}}
+                                    </div>
+                                    <i class="am-icon-shopping-basket am-icon-md  seprate"></i>
+                                </div>
+                            </a>
+                        </div>
+
+                    </div>
+                    <div class="clear "></div>
+                </div>
+            </div>
+        </div>
+        <!--菜单 -->
+        <div class="tip">
+            <div id="sidebar">
+                <div id="wrap">
+                    <div id="prof" class="item " v-if="islogin">
+                        <a href="# ">
+                            <span class="setting "></span>
+                        </a>
+                        <div class="ibar_login_box status_login ">
+                            <div class="avatar_box ">
+                                <p class="avatar_imgbox "><img src="~/Content/theme/admin/assets/img/user07.png" /></p>
+                                <ul class="user_info ">
+                                    <li>用户名sl1903</li>
+                                    <li>级&nbsp;别普通会员</li>
+                                </ul>
+                            </div>
+                            <div class="login_btnbox ">
+                                <a href="# " class="login_order ">我的订单</a>
+                            </div>
+                            <i class="icon_arrow_white "></i>
+                        </div>
+                    </div>
+                    @*<div id="shopCart" class="item" v-if="islogin">
+                        <a href="# ">
+                            <span class="message "></span>
+                        </a>
+                        <p>
+                            购物车
+                        </p>
+                        <p class="cart_num ">{{shopingcart}}</p>
+                    </div>*@
+                    <div class="quick_toggle ">
+                        <li class="qtitem ">
+                            <a href="# "><span class="kfzx "></span></a>
+                            <div class="mp_tooltip ">客服中心<i class="icon_arrow_right_black "></i></div>
+                        </li>
+                        <li class="qtitem ">
+                            <a href="#none "><span class="mpbtn_qrcode "></span></a>
+                            <div class="mp_qrcode " style="display:none; "><img src="~/Content/theme/shop/images/weixin_code_145.png " /><i class="icon_arrow_white "></i></div>
+                        </li>
+                        <li class="qtitem ">
+                            <a href="#top " class="return_top "><span class="top "></span></a>
+                        </li>
+                    </div>
+                    <!--回到顶部 -->
+                    <div id="quick_links_pop " class="quick_links_pop hide "></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+@section scripts{
+    <!--轮播-->
+    <script>
+        (function () {
+            $('.am-slider').flexslider();
+        });
+
+        if ($(window).width() < 640) {
+            function autoScroll(obj) {
+                $(obj).find("ul").animate({
+                    marginTop: "-39px"
+                }, 500, function () {
+                    $(this).css({
+                        marginTop: "0px"
+                    }).find("li:first").appendTo(this);
+                })
+            }
+            $(function () {
+                setInterval('autoScroll(".demo")', 3000);
+            })
+        }
+    </script>
+    <script src="~/Scripts/Home/index.js?v=0.0.1"></script>
+}
+
+

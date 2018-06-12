@@ -1,0 +1,42 @@
+﻿
+@{
+    ViewBag.Title = "Search";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section head{
+    <link type="text/css" href="~/Content/theme/shop/css/seastyle.css" rel="stylesheet" />
+    <link href="~/Content/plugins/ampager/amazeui.page.css" rel="stylesheet" />
+
+}
+<div class="am-g am-g-fixed" id="app-search">
+    <div class="am-u-sm-12">
+        <div class="search-content">
+            <div class="sort">
+                <li class="first"><a title="综合">综合排序</a></li>
+            </div>
+            <div class="clear"></div>
+            <ul class="am-avg-sm-2 am-avg-md-3 am-avg-lg-4 boxes">
+                <li v-for="item in list">
+                    <div class="i-pic limit">
+                        <a v-bind:href="'/Product/Introduction?id='+item.Id"> <img v-bind:src="item.CoverURL"  style="height:180px;width:auto;" /></a>
+                        <p class="title fl">{{item.Title}}</p>
+                        <p class="price fl">
+                            <b>¥</b>
+                            <strong>{{item.UnitPrice}}</strong>
+                        </p>
+                    </div>
+                </li>
+            </ul>
+            <div class="clear"></div>
+            <div id="pager"></div>
+        </div>
+    </div>
+</div>
+
+@section scripts{
+    <script src="~/Content/plugins/ampager/amazeui.page.js"></script>
+    <script src="~/Scripts/Home/search.js"></script>
+}
+
+
+

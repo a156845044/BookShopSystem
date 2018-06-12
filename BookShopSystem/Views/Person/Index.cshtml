@@ -1,0 +1,56 @@
+﻿
+@{
+    ViewBag.Title = "个人中心";
+    Layout = "~/Views/Shared/_Person.cshtml";
+}
+@section head{
+    <link href="~/Content/theme/shop/css/personal.css" rel="stylesheet" type="text/css">
+    <link href="~/Content/theme/shop/css/systyle.css" rel="stylesheet" type="text/css">
+}
+
+<div class="col-main" id="app-person">
+    <div class="main-wrap">
+        <div class="wrap-left">
+            <div class="wrap-list">
+                <div class="m-user">
+                    <!--个人信息 -->
+                    <div class="m-bg"></div>
+                    <div class="m-userinfo">
+                        <div class="m-baseinfo">
+                            <a href="/Person/Information">
+                                <img src="~/Content/theme/shop/images/getAvatar.do.jpg">
+                            </a>
+                            <em class="s-name" style=" padding-left:20px; ">{{loginInfo.Account}}</em>
+                        </div>
+                    </div>
+                </div>
+                <div class="box-container-bottom"></div>
+            </div>
+        </div>
+        <div class="wrap-right">
+            <!-- 日历-->
+            <div class="day-list">
+                <div class="s-bar">
+                    <a class="i-history-trigger s-icon" href="#"></a>我的日历
+                    <a class="i-setting-trigger s-icon" href="#"></a>
+                </div>
+                <div class="s-care s-care-noweather">
+                    <div class="s-date">
+                        <em>{{day}}</em>
+                        <span>{{week}}</span>
+                        <span>{{month}}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+@section scripts{
+    <script src="~/Content/plugins/moment/moment.js"></script>
+    <script src="~/Content/plugins/moment/zh.js"></script>
+    <script src="~/Scripts/Person/index.js"></script>
+}
+

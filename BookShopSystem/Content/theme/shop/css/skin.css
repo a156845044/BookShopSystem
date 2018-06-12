@@ -1,0 +1,8 @@
+﻿@charset "utf-8";
+/* CSS Document */
+.text-overflow {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+

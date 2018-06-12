@@ -1,0 +1,38 @@
+﻿
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section head{
+    <link href="~/Content/theme/shop/css/personal.css" rel="stylesheet" type="text/css">
+    <link href="~/Content/theme/shop/css/systyle.css" rel="stylesheet" type="text/css">
+    @RenderSection("head", false)
+}
+
+<div class="center" id="app-person">
+    @RenderBody()
+    <aside class="menu">
+        <ul>
+            <li class="person active">
+                <a href="index.html">个人中心</a>
+            </li>
+            <li class="person">
+                <a href="#">个人资料</a>
+                <ul>
+                    <li> <a href="/Person/Information">个人信息</a></li>
+                </ul>
+            </li>
+            <li class="person">
+                <a href="#">我的交易</a>
+                <ul>
+                    <li><a href="/Order/Index">订单管理</a></li>
+                </ul>
+            </li>
+        </ul>
+    </aside>
+</div>
+
+@section scripts{
+    @RenderSection("scripts", false)
+}
+
+

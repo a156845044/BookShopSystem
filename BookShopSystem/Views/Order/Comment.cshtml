@@ -1,0 +1,57 @@
+﻿
+@{
+    ViewBag.Title = "Comment";
+    Layout = "~/Views/Shared/_Person.cshtml";
+}
+@section head{
+    <link href="~/Content/theme/shop/css/appstyle.css" rel="stylesheet" type="text/css">
+}
+
+<div class="center" id="app-comment">
+    <div class="col-main">
+        <div class="main-wrap">
+            <div class="user-comment">
+                <!--标题 -->
+                <div class="am-cf am-padding">
+                    <div class="am-fl am-cf"><strong class="am-text-danger am-text-lg">发表评论</strong> / <small>Make&nbsp;Comments</small></div>
+                </div>
+                <hr />
+                <div class="comment-main">
+                    <div class="comment-list" v-for="item in commentList">
+                        <div class="item-pic">
+                            <a href="#" class="J_MakePoint">
+                                <img v-bind:src="item.CoverURL" style="height:180px;width:auto;" class="itempic">
+                            </a>
+                        </div>
+                        <div class="item-title">
+                            <div class="item-name">
+                                <a href="#">
+                                    <p class="item-basic-info">{{item.Title}}</p>
+                                </a>
+                            </div>
+                            <div class="item-info">
+                                <div class="item-price">
+                                    价格：<strong>{{item.UnitPrice}}</strong>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="clear"></div>
+                        <div class="item-comment">
+                            <textarea placeholder="请写下对宝贝的感受吧，对他人帮助很大哦！" v-model="item.CommentContent"></textarea>
+                        </div>
+
+                    </div>
+                    <div class="info-btn">
+                        <div class="am-btn am-btn-danger"  v-on:click="save()">发表评论</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts{
+    <script src="~/Scripts/Order/comment.js"></script>
+}
+
+
